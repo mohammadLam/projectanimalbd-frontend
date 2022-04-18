@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import Map from '../component/Map'
-import { BasicTeam as Team } from '../interface/Team'
+import { Team } from '../interface/Team'
 import { TeamContext } from '../context/team'
 import { LocationContext } from '../context/location'
 

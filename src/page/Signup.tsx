@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormik } from 'formik'
 import Input from '../component/Input'
 import Select from '../component/Select'
@@ -16,22 +16,17 @@ const Signup: React.FC = () => {
       repass: '',
       gender: ''
     },
-    onSubmit: () => {}
-  })
-
-  const signup = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log(formik.values)
-
-    const createAccount = await axios.post('/member/signup', formik.values)
-    if (createAccount.status === 200) {
-      console.log(createAccount.data)
+    onSubmit: async values => {
+      const createAccount = await axios.post('/member/signup', values)
+      if (createAccount.status === 200) {
+        alert('Account created successfully')
+      }
     }
-  }
+  })
 
   return (
     <form
-      onSubmit={signup}
+      onSubmit={formik.handleSubmit}
       className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-40'>
       <h1 className='text-3xl font-semibold text-center mb-5'>সাইন আপ</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
@@ -97,7 +92,7 @@ const Signup: React.FC = () => {
         <Input
           type='password'
           placeholder='পুনরায় পাসওয়ার্ড'
-          name='retypePassword'
+          name='repass'
           value={formik.values.repass}
           onChange={formik.handleChange}
         />

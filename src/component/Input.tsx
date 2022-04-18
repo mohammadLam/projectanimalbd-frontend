@@ -14,7 +14,7 @@ const Input: React.FC<Props> = props => {
   const { placeholder, type, hint } = props
   return (
     <div className='form-group'>
-      <label htmlFor=''>{placeholder}</label>
+      <label>{placeholder}</label>
       <input {...props} type={type || 'text'} placeholder={hint || ''} />
     </div>
   )

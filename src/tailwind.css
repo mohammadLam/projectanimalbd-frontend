@@ -27,13 +27,17 @@
   @apply font-medium text-gray-600 ml-1 mb-1;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
   @apply border 
   px-4 py-[0.4rem] 
   outline-none 
   shadow-sm 
   rounded-lg 
   transition
+  appearance-none
+  bg-white
   text-gray-900 
   border-gray-200 
   
@@ -41,15 +45,35 @@
   focus:border-2;
 }
 
+.form-group .file {
+  @apply border 
+  outline-none 
+  shadow-sm 
+  rounded-lg 
+  transition
+  appearance-none
+  bg-white
+  text-gray-900 
+  border-gray-200 
+  overflow-hidden
+  cursor-pointer
+  
+  focus:border-orange-500
+  focus:border-2;
+}
+
+.form-group .browse_button {
+  @apply px-4 py-2 bg-gray-200 text-gray-700;
+}
+
 .primary-btn {
-  @apply w-full 
-  bg-orange-500
+  @apply bg-orange-500
   hover:bg-orange-600
   transition-colors
   duration-200
   text-white 
-  py-2 px-4
-  font-medium rounded-lg;
+  py-[0.3rem] px-4
+  font-medium rounded;
 }
 
 .modal {

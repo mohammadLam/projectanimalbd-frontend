@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../img/logo.jpg'
+import logo from '../img/logo.svg'
 import { AuthContext } from '../context/auth'
 import axios from 'axios'
 
@@ -18,10 +18,10 @@ const Navigation: React.FC = () => {
   }
 
   return (
-    <nav className='h-[60px] bg-white shadow flex items-center'>
+    <nav className='h-[60px] bg-white border-b border-gray-300 flex items-center'>
       <div className='container mx-auto flex justify-between items-center'>
         <div className='grid grid-cols-3'>
-          <img className='w-12' src={logo} alt='logo' />
+          <img src={logo} alt='logo' />
           {/* <h1 className='logo__text'>Help Animal BD</h1> */}
         </div>
         <div className='nav__links_container'>
@@ -33,17 +33,15 @@ const Navigation: React.FC = () => {
           {!isAuthenticated && <Link to='/login'>Login</Link>}
         </div>
 
-        <div className='flex gap-x-3'>
+        <div className='flex gap-x-5'>
+          <button className='text-purple-500 transition-colors'>Donate</button>
           {isAuthenticated && (
             <button
-              className='bg-red-500 hover:bg-red-600 cursor-pointer px-4 py-1 rounded text-white transition-colors'
+              className='cursor-pointer text-red-500 transition-colors'
               onClick={logout}>
               Logout
             </button>
           )}
-          <div className='bg-purple-500 hover:bg-purple-600 cursor-pointer px-4 py-1 rounded text-white transition-colors'>
-            Donate
-          </div>
         </div>
       </div>
     </nav>

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react'
-import { BasicTeam as Team } from '../interface/Team'
+import { Team } from '../interface/Team'
 
 const initialState: Team[] = []
 

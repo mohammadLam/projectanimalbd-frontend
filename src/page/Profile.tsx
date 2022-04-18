@@ -15,16 +15,37 @@ const Profile: React.FC = () => {
       address: ''
     },
     onSubmit: async values => {
-      axios.put('/member/profile', profile.values)
+      const { status, data } = await axios.put('/member/profile', values, {
+        withCredentials: true
+      })
+      if (status === 200) {
+        alert('Profile updated successfully')
+      } else {
+        console.log(data)
+      }
     }
   })
 
   const password = useFormik({
     initialValues: {
-      password: '',
-      newPassword: ''
+      oldPassword: '',
+      newPassword: '',
+      rePassword: ''
     },
-    onSubmit: () => {}
+    onSubmit: async values => {
+      const { status, data } = await axios.put(
+        '/member/change-password',
+        values,
+        {
+          withCredentials: true
+        }
+      )
+      if (status === 200) {
+        alert('Password Changed')
+      } else {
+        console.log(data)
+      }
+    }
   })
 
   useEffect(() => {
@@ -42,7 +63,7 @@ const Profile: React.FC = () => {
       <form
         onSubmit={profile.handleSubmit}
         className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-20'>
-        <h1 className='text-3xl font-semibold mb-5'>প্রোফাইল</h1>
+        <h1 className='text-3xl font-semibold mb-5'>প্রোফাইলঃ</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <Input
             placeholder='নাম'
@@ -87,35 +108,48 @@ const Profile: React.FC = () => {
               }
             ]}
           </Select>
-          <Input
-            placeholder='ঠিকানা'
-            className='col-span-full'
-            name='address'
-            hint='এলাকার নাম, উপজেলা, জেলা'
-            value={profile.values.address}
-            onChange={profile.handleChange}
-          />
+          <div className='col-span-full'>
+            <Input
+              placeholder='ঠিকানা'
+              name='address'
+              hint='এলাকার নাম, উপজেলা, জেলা'
+              value={profile.values.address}
+              onChange={profile.handleChange}
+            />
+          </div>
         </div>
+
         <Button type='submit'>আপডেট করুন</Button>
       </form>
 
       <form
-        onSubmit={profile.handleSubmit}
+        onSubmit={password.handleSubmit}
         className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-10'>
         <h1 className='text-3xl font-semibold mb-5'>
           পাসওয়ার্ড পরিবর্তন করুনঃ
         </h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
+          <div className='col-span-full'>
+            <Input
+              type='password'
+              placeholder='বর্তমান পাসওয়ার্ড'
+              name='oldPassword'
+              value={password.values.oldPassword}
+              onChange={password.handleChange}
+            />
+          </div>
           <Input
-            placeholder='বর্তমান পাসওয়ার্ড'
-            name='name'
-            value={password.values.password}
+            type='password'
+            placeholder='নতুন পাসওয়ার্ড'
+            name='newPassword'
+            value={password.values.newPassword}
             onChange={password.handleChange}
           />
           <Input
-            placeholder='নতুন পাসওয়ার্ড'
-            name='phone'
-            value={password.values.newPassword}
+            type='password'
+            placeholder='পাসওয়ার্ড আবার দিন'
+            name='rePassword'
+            value={password.values.rePassword}
             onChange={password.handleChange}
           />
         </div>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 // Context
@@ -7,6 +7,7 @@ import { AuthContext } from './context/auth'
 
 // Components
 import Navigation from './component/navigation'
+import Modal from './component/Modal'
 
 // Routes
 import { AuthenticateRoute, UnauthenticatedRoute } from './route/authenticate'
@@ -27,9 +28,9 @@ const App: React.FC = () => {
   axios.interceptors.response.use(
     response => response,
     async err => {
-      if (err.response.status === 401) {
+      if (err.response.status === 400) {
         try {
-          await axios.get('/token/refresh-access-token', {
+          await axios.get('/token/refresh-token', {
             withCredentials: true
           })
 

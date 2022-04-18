@@ -2,8 +2,8 @@ import React from 'react'
 
 interface Props {
   children: string
-  round?: 'full' | 'medium' | 'none'
   type?: 'submit' | 'button'
+  widthFull?: boolean
   onClick?: (
     event:
       | React.FormEventHandler<HTMLButtonElement>
@@ -13,7 +13,9 @@ interface Props {
 
 const Button: React.FC<Props> = props => {
   return (
-    <button {...props} className='primary-btn'>
+    <button
+      {...props}
+      className={`primary-btn ${props.widthFull ? 'w-full' : ''}`}>
       {props.children}
     </button>
   )

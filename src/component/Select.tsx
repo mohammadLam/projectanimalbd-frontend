@@ -15,14 +15,9 @@ const Select: React.FC<Props> = props => {
   const { placeholder, children, value } = props
 
   return (
-    <div className='flex flex-col mb-3'>
-      <label htmlFor='' className='font-medium text-gray-600 ml-1 mb-1'>
-        {placeholder}
-      </label>
-      <select
-        {...props}
-        value={value}
-        className='border px-3 py-[0.4rem] outline-none bg-white appearance-none text-gray-900 border-[#E7E7E7] focus:border-[#0084FF]'>
+    <div className='form-group'>
+      <label>{placeholder}</label>
+      <select {...props} value={value}>
         {children.map((option, index) => (
           <option key={index} value={option.value}>
             {option.text}
