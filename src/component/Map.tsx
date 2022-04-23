@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
 import { useFormik } from 'formik'
+import toast from 'react-hot-toast'
 
 import { TeamContext } from '../context/team'
 import Input from './Input'
@@ -50,7 +51,7 @@ const Map: React.FC = () => {
 
       if (request.status === 200) {
         setIsModalOpen(false)
-        alert('Request created')
+        toast.success('আপনার অনুরোধ পাঠানো হয়েছে')
       }
     }
   })
@@ -84,18 +85,25 @@ const Map: React.FC = () => {
         <MapContainer
           center={{ lat: latitude, lng: longitude }}
           zoom={15}
-          scrollWheelZoom={true}>
+          scrollWheelZoom={true}
+        >
           <TileLayer
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           <Circle center={[latitude, longitude]} radius={5000} />
+          <Marker position={[latitude, longitude]}>
+            <Popup>
+              <h1 className='text-2xl font-medium'>আপনার লোকেশান</h1>
+            </Popup>
+          </Marker>
 
           {teams &&
             teams.map((team, index) => (
               <Marker
                 position={[team.location[0], team.location[1]]}
-                key={index}>
+                key={index}
+              >
                 <Popup className='w-80'>
                   <h2 className='text-2xl font-semibold'>{team.name}</h2>
                   <p className='text-base mb-1'>{team.address}</p>
@@ -107,7 +115,8 @@ const Map: React.FC = () => {
                     </a>
                     <a
                       className='text-base'
-                      href={`mailto:${team.contact.email}`}>
+                      href={`mailto:${team.contact.email}`}
+                    >
                       {team.contact.email}
                     </a>
                   </div>
@@ -115,7 +124,8 @@ const Map: React.FC = () => {
                   {/* <p className='text-base'>ফান্ড আছে {team.fund} টাকা</p> */}
                   <button
                     className='bg-green-600 px-3 py-1 rounded text-white'
-                    onClick={() => selectTeamForRequest(team._id)}>
+                    onClick={() => selectTeamForRequest(team._id)}
+                  >
                     রিকোয়েস্ট করুন
                   </button>
                 </Popup>
@@ -128,7 +138,8 @@ const Map: React.FC = () => {
         headerText='রিকোয়েস্ট পাঠান'
         isModalOpen={isModalOpen}
         openModalFunction={openModal}
-        closeModalFunction={hideModal}>
+        closeModalFunction={hideModal}
+      >
         <form onSubmit={request.handleSubmit}>
           <div className='grid grid-cols-1'>
             <Input
@@ -142,7 +153,8 @@ const Map: React.FC = () => {
               placeholder='বিস্তারিত লিখুন'
               name='description'
               value={request.values.description}
-              onChange={request.handleChange}></Textarea>
+              onChange={request.handleChange}
+            ></Textarea>
             <File
               onChange={photoChangeHandler}
               multiple={true}

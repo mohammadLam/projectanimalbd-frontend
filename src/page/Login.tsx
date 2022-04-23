@@ -2,6 +2,9 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+
+import toast from 'react-hot-toast'
 
 import { AuthContext } from '../context/auth'
 
@@ -20,26 +23,43 @@ const Login: React.FC = () => {
       phone: '',
       password: ''
     },
-    onSubmit: () => {}
-  })
+    validationSchema: Yup.object({
+      phone: Yup.string()
+        .min(11, 'মোবাইল নম্বর সঠিক নয়')
+        .max(11, 'মোবাইল নম্বর ১১ সংখ্যার বেশী হবেনা')
+        .required('মোবাইল নম্বর দিন'),
+      password: Yup.string().required('পাসওয়ার্ড দিন')
+    }),
+    onSubmit: async () => {
+      try {
+        const { data, status } = await axios.post(
+          '/member/login',
+          formik.values,
+          {
+            withCredentials: true
+          }
+        )
 
-  const login = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const login = await axios.post('/member/login', formik.values, {
-      withCredentials: true
-    })
-    if (login.status === 200) {
-      dispatch({ type: 'authenticated' })
-      navigate('/')
+        if (status === 200) {
+          dispatch({
+            type: 'authenticated',
+            payload: data
+          })
+          toast.success('লগ ইন সম্পন্ন হয়েছে')
+          navigate('/')
+        }
+      } catch (error) {
+        toast.error('ফোন নং অথবা পাসওয়ার্ড ভুল দিয়েছেন')
+      }
     }
-  }
+  })
 
   return (
     <form
       method='POST'
-      onSubmit={login}
-      className='bg-white border px-8 py-5 w-[350px] rounded-xl shadow-lg mx-auto mt-40'>
+      onSubmit={formik.handleSubmit}
+      className='bg-white border px-8 py-5 w-[350px] rounded-xl shadow-lg mx-auto mt-40'
+    >
       <h1 className='text-3xl font-bold text-center mb-5'>লগইন</h1>
       <div className=''>
         <Input
@@ -47,6 +67,8 @@ const Login: React.FC = () => {
           name='phone'
           value={formik.values.phone}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.phone ? formik.errors.phone : undefined}
         />
 
         <Input
@@ -55,6 +77,8 @@ const Login: React.FC = () => {
           name='password'
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password ? formik.errors.password : undefined}
         />
 
         <p className='mb-3 text-orange-500'>

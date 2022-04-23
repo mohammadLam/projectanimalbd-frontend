@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
+import toast from 'react-hot-toast'
+
 import Input from '../component/Input'
 import Select from '../component/Select'
 import Button from '../component/Button'
@@ -15,13 +17,16 @@ const Profile: React.FC = () => {
       address: ''
     },
     onSubmit: async values => {
-      const { status, data } = await axios.put('/member/profile', values, {
-        withCredentials: true
-      })
-      if (status === 200) {
-        alert('Profile updated successfully')
-      } else {
-        console.log(data)
+      try {
+        const { status } = await axios.put('/member/profile', values, {
+          withCredentials: true
+        })
+
+        if (status === 200) {
+          toast.success('প্রোফাইল আপডেট হয়েছে')
+        }
+      } catch (error: any) {
+        toast.error(error.response.data.message)
       }
     }
   })
@@ -33,24 +38,20 @@ const Profile: React.FC = () => {
       rePassword: ''
     },
     onSubmit: async values => {
-      const { status, data } = await axios.put(
-        '/member/change-password',
-        values,
-        {
+      const request = axios
+        .put('/member/change-password', values, {
           withCredentials: true
-        }
-      )
-      if (status === 200) {
-        alert('Password Changed')
-      } else {
-        console.log(data)
-      }
+        })
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
     }
   })
 
   useEffect(() => {
     const profileInfo = async () => {
-      const me = await axios.get('/member/me', { withCredentials: true })
+      const me = await axios.get('/member/me', {
+        withCredentials: true
+      })
       if (me.status === 200) {
         profile.setValues(me.data)
       }
@@ -59,10 +60,11 @@ const Profile: React.FC = () => {
     profileInfo()
   }, [])
   return (
-    <div className='container mx-auto'>
+    <div className='container px-3 lg:px-0 mx-auto'>
       <form
         onSubmit={profile.handleSubmit}
-        className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-20'>
+        className='bg-white border px-3 md:px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-5 md:mt-20'
+      >
         <h1 className='text-3xl font-semibold mb-5'>প্রোফাইলঃ</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <Input
@@ -88,7 +90,8 @@ const Profile: React.FC = () => {
             placeholder='লিঙ্গ'
             value={profile.values.gender}
             name='gender'
-            onChange={profile.handleChange}>
+            onChange={profile.handleChange}
+          >
             {[
               {
                 value: '',
@@ -124,10 +127,9 @@ const Profile: React.FC = () => {
 
       <form
         onSubmit={password.handleSubmit}
-        className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-10'>
-        <h1 className='text-3xl font-semibold mb-5'>
-          পাসওয়ার্ড পরিবর্তন করুনঃ
-        </h1>
+        className='bg-white border px-3 md:px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-10'
+      >
+        <h1 className='text-3xl font-semibold mb-5'>পাসওয়ার্ড পরিবর্তন করুনঃ</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <div className='col-span-full'>
             <Input

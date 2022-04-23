@@ -12,15 +12,21 @@
     "axios": "^0.26.1",
     "formik": "^2.2.9",
     "leaflet": "^1.7.1",
+    "luxon": "^2.3.2",
+    "qrcode": "^1.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.2.0",
     "react-leaflet": "^3.2.5",
     "react-modal": "^3.14.4",
     "react-router-dom": "^6.3.0",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/leaflet": "^1.7.9",
+    "@types/luxon": "^2.3.1",
+    "@types/qrcode": "^1.4.2",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@types/react-modal": "^3.13.1",

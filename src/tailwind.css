@@ -8,7 +8,7 @@
 }
 
 .nav__links_container {
-  @apply flex justify-between gap-x-5;
+  @apply hidden lg:flex justify-between gap-x-5;
 }
 
 .nav__links_container a {
@@ -21,6 +21,10 @@
 
 .form-group {
   @apply flex flex-col mb-3;
+}
+
+.form-group.error input {
+  @apply bg-red-100 border-2 border-red-400 text-red-700 focus:border-red-500;
 }
 
 .form-group label {
@@ -82,14 +86,14 @@
   border bg-white 
   overflow-auto 
   rounded-lg outline-none 
-  px-10 py-8 
+  px-10 py-5 
   min-w-[400px] max-w-[800px] 
   h-max 
   m-auto shadow;
 }
 
 .modal .header {
-  @apply flex justify-between items-center mb-3;
+  @apply flex justify-between items-center mb-5;
 }
 
 .modal .footer {

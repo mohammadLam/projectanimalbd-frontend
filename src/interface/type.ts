@@ -1,1 +1,2 @@
-export type genderType = 'male' | 'female' | 'other'
+export type GenderType = 'male' | 'female' | 'other'
+export type ModalType = 'createTeam' | 'joinTeam'

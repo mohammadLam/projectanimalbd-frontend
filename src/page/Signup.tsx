@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 import Input from '../component/Input'
 import Select from '../component/Select'
 import Button from '../component/Button'
+import { object, string } from 'yup'
 
 const Signup: React.FC = () => {
   const formik = useFormik({
@@ -16,6 +17,10 @@ const Signup: React.FC = () => {
       repass: '',
       gender: ''
     },
+    validationSchema: object({
+      name: string().max(20, 'নাম অবশ্যই ২০ অক্ষরের মধ্যে হতে হবে').required('নাম লিখুন'),
+      age: string().required('বয়স লিখুন')
+    }),
     onSubmit: async values => {
       const createAccount = await axios.post('/member/signup', values)
       if (createAccount.status === 200) {
@@ -27,7 +32,8 @@ const Signup: React.FC = () => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-40'>
+      className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-40'
+    >
       <h1 className='text-3xl font-semibold text-center mb-5'>সাইন আপ</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
         <Input
@@ -35,6 +41,8 @@ const Signup: React.FC = () => {
           name='name'
           value={formik.values.name}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.name ? formik.errors.name : undefined}
         />
         <Input
           placeholder='মোবাইল'
@@ -53,7 +61,8 @@ const Signup: React.FC = () => {
           placeholder='লিঙ্গ'
           value={formik.values.gender}
           name='gender'
-          onChange={formik.handleChange}>
+          onChange={formik.handleChange}
+        >
           {[
             {
               value: '',

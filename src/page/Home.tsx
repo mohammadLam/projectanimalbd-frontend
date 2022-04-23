@@ -34,21 +34,21 @@ const Home: React.FC = () => {
   }, [location])
 
   return (
-    <div className='relative'>
+    <div>
       <div className='flex'>
         {/* Sidebar */}
         <div
           className={`${
             sidebarIsOpen ? 'w-full md:w-1/5' : 'w-0'
-          } shadow-xl bg-gray-50 transition-all duration-200`}>
+          } shadow-xl bg-gray-50 transition-all duration-200`}
+        >
           {teams &&
             teams.map((team, index) => (
               <div
                 key={index}
-                className='px-5 py-3 border-b bg-white hover:bg-gray-100 transition-colors cursor-pointer'>
-                <h1 className='text-xl lg:text-2xl font-semibold'>
-                  {team.name}
-                </h1>
+                className='px-5 py-3 border-b bg-white hover:bg-gray-100 transition-colors cursor-pointer'
+              >
+                <h1 className='text-xl lg:text-2xl font-semibold'>{team.name}</h1>
                 <p>{team.address}</p>
                 <a className='text-blue-600' href={`tel:${team.contact.phone}`}>
                   {team.contact.phone}
@@ -66,13 +66,15 @@ const Home: React.FC = () => {
       {/* সাইডবার show/hide এর বাটন */}
       <button
         className='absolute bottom-5 left-5 w-12 h-12 rounded-full z-20 bg-white shadow-xl flex justify-center items-center'
-        onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
+        onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+      >
         <svg
           className='fill-gray-500'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 30 30'
           width='30px'
-          height='30px'>
+          height='30px'
+        >
           <path d='M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z' />
         </svg>
       </button>
