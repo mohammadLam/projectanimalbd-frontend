@@ -19,14 +19,10 @@ interface ContextType {
   dispatch: React.Dispatch<ACTIONTYPE>
 }
 
-export const TeamContext = createContext<ContextType>({} as ContextType)
+export const TeamContext = createContext<ContextType>(null!)
 
 export const TeamProvider: React.FC = ({ children }) => {
   const [teams, dispatch] = useReducer(reducerFunction, initialState)
 
-  return (
-    <TeamContext.Provider value={{ teams, dispatch }}>
-      {children}
-    </TeamContext.Provider>
-  )
+  return <TeamContext.Provider value={{ teams, dispatch }}>{children}</TeamContext.Provider>
 }

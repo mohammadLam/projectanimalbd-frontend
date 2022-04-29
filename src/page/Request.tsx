@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { DateTime } from 'luxon'
 import Heading from '../component/Heading'
 
 export interface IRequest {

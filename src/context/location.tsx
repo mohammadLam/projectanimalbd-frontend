@@ -8,10 +8,12 @@ type ACTIONTYPE = { type: 'store'; payload: location }
 
 const reducerFunction = (state: location, action: ACTIONTYPE) => {
   switch (action.type) {
-    case 'store':
+    case 'store': {
       return action.payload
-    default:
+    }
+    default: {
       return state
+    }
   }
 }
 
@@ -20,7 +22,7 @@ interface ContextType {
   dispatch: React.Dispatch<ACTIONTYPE>
 }
 
-export const LocationContext = createContext<ContextType>({} as ContextType)
+export const LocationContext = createContext<ContextType>(null!)
 
 export const LocationProvider: React.FC = ({ children }) => {
   const [location, dispatch] = useReducer(reducerFunction, initialState)
@@ -35,8 +37,6 @@ export const LocationProvider: React.FC = ({ children }) => {
   }, [])
 
   return (
-    <LocationContext.Provider value={{ location, dispatch }}>
-      {children}
-    </LocationContext.Provider>
+    <LocationContext.Provider value={{ location, dispatch }}>{children}</LocationContext.Provider>
   )
 }

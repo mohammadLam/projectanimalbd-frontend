@@ -91,7 +91,7 @@ const ViewAdmin: React.FC = () => {
       if (status === 200) {
         QRCode.toCanvas(
           canvas,
-          `${axios.defaults.baseURL}/join?team=${data._id}`,
+          `${axios.defaults.baseURL}/join?teamId=${data._id}`,
           function (error) {
             if (error) toast.error('QR Code জেনারেট করা যায়নি')
           }

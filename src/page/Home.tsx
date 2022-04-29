@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       const response = await axios.post<Team[]>(
-        '/team/under/5',
+        '/team/under/80',
         {
           location: location
         },

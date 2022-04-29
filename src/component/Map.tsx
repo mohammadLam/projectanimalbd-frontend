@@ -73,6 +73,8 @@ const Map: React.FC = () => {
   const hideModal = () => setIsModalOpen(false)
 
   useEffect(() => {
+    console.log()
+
     navigator.geolocation.getCurrentPosition(position => {
       setLatitude(position.coords.latitude)
       setLongitude(position.coords.longitude)
@@ -82,16 +84,12 @@ const Map: React.FC = () => {
   return (
     <>
       {latitude && longitude && (
-        <MapContainer
-          center={{ lat: latitude, lng: longitude }}
-          zoom={15}
-          scrollWheelZoom={true}
-        >
+        <MapContainer center={{ lat: latitude, lng: longitude }} zoom={15} scrollWheelZoom={true}>
           <TileLayer
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Circle center={[latitude, longitude]} radius={5000} />
+          <Circle center={[latitude, longitude]} radius={80000} />
           <Marker position={[latitude, longitude]}>
             <Popup>
               <h1 className='text-2xl font-medium'>আপনার লোকেশান</h1>
@@ -100,10 +98,7 @@ const Map: React.FC = () => {
 
           {teams &&
             teams.map((team, index) => (
-              <Marker
-                position={[team.location[0], team.location[1]]}
-                key={index}
-              >
+              <Marker position={[team.location[0], team.location[1]]} key={index}>
                 <Popup className='w-80'>
                   <h2 className='text-2xl font-semibold'>{team.name}</h2>
                   <p className='text-base mb-1'>{team.address}</p>
@@ -113,10 +108,7 @@ const Map: React.FC = () => {
                     <a className='text-base' href={`tel:${team.contact.phone}`}>
                       {team.contact.phone}
                     </a>
-                    <a
-                      className='text-base'
-                      href={`mailto:${team.contact.email}`}
-                    >
+                    <a className='text-base' href={`mailto:${team.contact.email}`}>
                       {team.contact.email}
                     </a>
                   </div>

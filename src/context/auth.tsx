@@ -13,9 +13,7 @@ interface Unauthorized {
   authenticated: boolean
 }
 
-type ACTIONTYPE =
-  | { type: 'authenticated'; payload: Authorized }
-  | { type: 'unauthenticated' }
+type ACTIONTYPE = { type: 'authenticated'; payload: Authorized } | { type: 'unauthenticated' }
 
 const defaultState: Unauthorized | Authorized = {
   authenticated: false
@@ -39,10 +37,7 @@ const defaultState: Unauthorized | Authorized = {
   }
 */
 
-const reducerFunction = (
-  state: Authorized | Unauthorized,
-  action: ACTIONTYPE
-) => {
+const reducerFunction = (state: Authorized | Unauthorized, action: ACTIONTYPE) => {
   switch (action.type) {
     case 'authenticated': {
       const { memberId, team } = action.payload
@@ -76,14 +71,10 @@ interface ContextType {
   dispatch: React.Dispatch<ACTIONTYPE>
 }
 
-export const AuthContext = createContext<ContextType>({} as ContextType)
+export const AuthContext = createContext<ContextType>(null!)
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [auth, dispatch] = useReducer(reducerFunction, defaultState)
 
-  return (
-    <AuthContext.Provider value={{ auth, dispatch }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ auth, dispatch }}>{children}</AuthContext.Provider>
 }

@@ -28,8 +28,8 @@ const App: React.FC = () => {
   const { dispatch } = useContext(AuthContext)
 
   // axios.defaults.baseURL = 'https://animal-help-bd.herokuapp.com/api/'
-  // axios.defaults.baseURL = 'http://localhost:3001/api'
-  axios.defaults.baseURL = 'http://192.168.2.114:3001/api'
+  axios.defaults.baseURL = 'http://localhost:3001/api'
+  // axios.defaults.baseURL = 'http://192.168.2.114:3001/api'
   axios.interceptors.response.use(
     response => response,
     async function (err) {
@@ -87,7 +87,7 @@ const App: React.FC = () => {
       </Routes>
 
       <Toaster
-        position='top-center'
+        position='top-right'
         reverseOrder={false}
         gutter={8}
         containerClassName=''
