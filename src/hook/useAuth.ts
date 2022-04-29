@@ -3,18 +3,19 @@ import axios from 'axios'
 
 import { AuthContext } from '../context/auth'
 
-interface AuthResponse {
-  accessToken: string
-  refreshToken: string
-}
-
 const useAuth = async () => {
   const { dispatch } = useContext(AuthContext)
 
   try {
-    const user = await axios.get<AuthResponse>('/auth')
+    const { data, status } = await axios.get('/auth', {
+      withCredentials: true
+    })
 
-    if (user.status === 200) dispatch({ type: 'store', payload: user.data })
+    if (status === 200)
+      dispatch({
+        type: 'authenticated',
+        payload: data
+      })
   } catch (error) {
     console.log(error)
   }
