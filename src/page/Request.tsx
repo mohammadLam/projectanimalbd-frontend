@@ -44,7 +44,7 @@ const Request: React.FC = () => {
           {yourRequests.map(request => (
             <div
               key={request._id}
-              className='w-full flex flex-col lg:flex-row bg-white mb-3 border rounded-lg shadow-sm overflow-hidden'
+              className='w-full flex flex-col lg:flex-row bg-white mb-3 border rounded-xl shadow-sm overflow-hidden'
             >
               <div>
                 <img
