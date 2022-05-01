@@ -65,7 +65,7 @@ const Profile: React.FC = () => {
         onSubmit={profile.handleSubmit}
         className='bg-white border px-3 md:px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-5 md:mt-20'
       >
-        <h1 className='text-3xl font-semibold mb-5'>প্রোফাইলঃ</h1>
+        <h1 className='text-3xl font-normal mb-5'>প্রোফাইলঃ</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <Input
             placeholder='নাম'

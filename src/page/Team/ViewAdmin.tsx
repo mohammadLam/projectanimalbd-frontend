@@ -5,6 +5,10 @@ import Member from './Member'
 import RescueRequest from './RescueRequest'
 import { AuthContext } from '../../context/auth'
 import toast from 'react-hot-toast'
+import Heading from '../../component/Heading'
+
+import { enToBn } from '../../function/en-bn'
+import { Tab } from '@headlessui/react'
 
 export interface IMember {
   _id: string
@@ -28,6 +32,7 @@ export interface IRequest {
   photos: string[]
   description: string
   createdAt: string
+  status: 'pending' | 'done' | 'reject'
 }
 
 interface ITeamInfo {
@@ -74,7 +79,7 @@ const ViewAdmin: React.FC = () => {
     }
 
     const fetchRequest = async () => {
-      const { data, status } = await axios.get('/request', {
+      const { data, status } = await axios.get('/request/team', {
         withCredentials: true
       })
 
@@ -89,14 +94,14 @@ const ViewAdmin: React.FC = () => {
       })
 
       if (status === 200) {
+        setTeamInfo(data)
         QRCode.toCanvas(
-          canvas,
+          document.getElementById('canvas'),
           `${axios.defaults.baseURL}/join?teamId=${data._id}`,
           function (error) {
             if (error) toast.error('QR Code জেনারেট করা যায়নি')
           }
         )
-        setTeamInfo(data)
       }
     }
 
@@ -110,32 +115,95 @@ const ViewAdmin: React.FC = () => {
   return (
     <div className='container mx-auto px-5 md:px-0'>
       <div className='mt-5'>
-        <div className='bg-white px-7 py-4 rounded-lg shadow mb-3 w-full lg:w-max mx-auto flex-col lg:flex justify-between items-center gap-x-20'>
-          <div>
-            <h1 className='text-2xl font-bold'>দলের তথ্যঃ</h1>
-            <p className='font-medium text-gray-700'>দলের নামঃ {teamInfo?.name}</p>
-            <p className='font-medium text-gray-700'>মোট সদস্যঃ {teamInfo?.members.length}</p>
-            <p className='font-medium text-gray-700'>দলের অবস্থানঃ {teamInfo?.address}</p>
-            <p className='font-medium text-gray-700'>যোগাযোগঃ {teamInfo?.contact.phone}</p>
+        {teamInfo && (
+          <div className='py-5 mb-10 bg-white border-b-2 border-gray-200 flex mx-auto lg:flex justify-center items-center gap-x-20'>
+            <div>
+              <Heading>দলের তথ্যঃ</Heading>
+              <p>দলের নামঃ {teamInfo.name}</p>
+              <p>মোট সদস্যঃ {enToBn(teamInfo.members.length)} জন</p>
+              <p>দলের অবস্থানঃ {teamInfo.address}</p>
+              <p>যোগাযোগঃ {teamInfo.contact.phone}</p>
+            </div>
+            <div className='flex flex-col items-center'>
+              <canvas id='canvas'></canvas>
+              <p className='text-center leading-tight'>
+                QRCode স্ক্যান করে দলে <br /> যোগ দিতে পারবেন
+              </p>
+            </div>
           </div>
-          <div className='flex flex-col items-center'>
-            <canvas id='canvas'></canvas>
-            <p className='text-center'>
-              QRCode স্ক্যান করে দলে <br /> যোগ দিতে পারবেন
-            </p>
-          </div>
+        )}
+
+        <div className='border-b-2 border-gray-200 pb-10 mb-10'>
+          <Heading align='center'>সাহায্যের জন্য আবেদেন করেছেনঃ</Heading>
+
+          <Tab.Group defaultIndex={2}>
+            <Tab.List className='mx-auto w-max bg-white rounded overflow-hidden border mb-3'>
+              <Tab
+                className={({ selected }) =>
+                  `px-5 py-2 ${
+                    selected ? 'bg-gray-200 text-gray-600 font-normal' : 'text-yellow-800'
+                  }`
+                }
+              >
+                সবগুলো
+              </Tab>
+              <Tab
+                className={({ selected }) =>
+                  `px-5 py-2 ${
+                    selected ? 'bg-gray-200 text-gray-600 font-normal' : 'text-yellow-800'
+                  }`
+                }
+              >
+                পেন্ডিং
+              </Tab>
+              <Tab
+                className={({ selected }) =>
+                  `px-5 py-2 ${
+                    selected ? 'bg-gray-200 text-gray-600 font-normal' : 'text-yellow-800'
+                  }`
+                }
+              >
+                রিজেক্ট
+              </Tab>
+            </Tab.List>
+            <Tab.Panels>
+              <Tab.Panel>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                  {requests &&
+                    requests.map(request => <RescueRequest request={request} key={request._id} />)}
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                  {requests &&
+                    requests.map(
+                      request =>
+                        request.status === 'pending' && (
+                          <RescueRequest request={request} key={request._id} />
+                        )
+                    )}
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                  {requests &&
+                    requests.map(
+                      request =>
+                        request.status === 'reject' && (
+                          <RescueRequest request={request} key={request._id} />
+                        )
+                    )}
+                </div>
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
         </div>
 
-        <h1 className='text-3xl text-center font-bold mb-5'>সাহায্যের জন্য আবেদেন করেছেনঃ</h1>
-
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3 mb-10'>
-          {requests &&
-            requests.map(request => <RescueRequest request={request} key={request._id} />)}
-        </div>
-
-        <h1 className='text-3xl font-bold text-center mb-5'>সদস্যের তালিকাঃ</h1>
-        <div className='flex flex-wrap gap-3 mb-10 justify-center'>
-          {memberList && memberList.map(member => <Member member={member} key={member._id} />)}
+        <div className='mb-10'>
+          <Heading align='center'>সদস্যের তালিকাঃ</Heading>
+          <div className='flex flex-wrap gap-3 mb-10 justify-center'>
+            {memberList && memberList.map(member => <Member member={member} key={member._id} />)}
+          </div>
         </div>
 
         {/* <h1 className='text-3xl text-center font-bold mb-5'>

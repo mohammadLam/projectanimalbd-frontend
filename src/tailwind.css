@@ -28,7 +28,7 @@
 }
 
 .form-group label {
-  @apply font-medium text-gray-600 ml-1 mb-1;
+  @apply font-normal text-gray-600 ml-1 mb-1;
 }
 
 .form-group input,
@@ -46,7 +46,7 @@
   border-gray-200 
   
   focus:border-orange-500
-  focus:border-2;
+  focus:border;
 }
 
 .form-group .file {
@@ -74,10 +74,10 @@
   @apply bg-orange-500
   hover:bg-orange-600
   transition-colors
-  duration-200
+  duration-300
   text-white 
   py-[0.3rem] px-4
-  font-medium rounded;
+  font-normal rounded;
 }
 
 .modal {

@@ -23,7 +23,7 @@ const Request: React.FC = () => {
 
   useEffect(() => {
     const fetchYourRequests = async () => {
-      const { data, status } = await axios.get('/request', {
+      const { data, status } = await axios.get('/request/my', {
         withCredentials: true
       })
 
@@ -40,11 +40,11 @@ const Request: React.FC = () => {
       <Heading>আপনার রিকোয়েষ্ট হিস্টোরিঃ</Heading>
 
       {yourRequests && yourRequests.length > 0 ? (
-        <>
+        <div>
           {yourRequests.map(request => (
             <div
               key={request._id}
-              className='w-full flex flex-col lg:flex-row bg-white mb-3 border rounded-xl shadow-sm overflow-hidden'
+              className='w-full flex flex-col lg:flex-row bg-white mb-3 border rounded-xl shadow-lg overflow-hidden'
             >
               <div>
                 <img
@@ -64,7 +64,7 @@ const Request: React.FC = () => {
               </div>
             </div>
           ))}
-        </>
+        </div>
       ) : (
         <h1>আপনি কোন রিকোয়েস্টই করেননি</h1>
       )}

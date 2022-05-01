@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 import logo from '../img/logo.svg'
 import { AuthContext } from '../context/auth'
 import axios from 'axios'
@@ -8,6 +9,7 @@ import close from '../img/close.svg'
 
 const Navigation: React.FC = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   const { auth, dispatch } = useContext(AuthContext)
   const logout = async () => {
@@ -37,14 +39,20 @@ const Navigation: React.FC = () => {
           <Link to='/contact'>যোগাযোগ</Link>
           {!auth.authenticated && <Link to='/login'>লগ-ইন</Link>}
           {auth.authenticated && (
-            <button className='cursor-pointer text-red-500 transition-colors' onClick={logout}>
+            <button
+              className='px-3 py-2 hover:bg-red-200 cursor-pointer text-red-500'
+              onClick={logout}
+            >
               লগ-আউট
             </button>
           )}
         </div>
 
         <div className='hidden lg:flex gap-x-5'>
-          <button className='bg-purple-500 text-white px-3 py-1 rounded transition-colors'>
+          <button
+            className='bg-purple-500 text-white px-3 py-1 rounded transition-colors'
+            onClick={() => navigate('/donate')}
+          >
             সাহায্য করুন
           </button>
         </div>
@@ -61,6 +69,7 @@ const Navigation: React.FC = () => {
 
 const MobileNavigation: React.FC = () => {
   const { auth, dispatch } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const logout = async () => {
     try {
@@ -95,7 +104,10 @@ const MobileNavigation: React.FC = () => {
               লগ-আউট
             </button>
           )}
-          <button className='bg-purple-500 text-white px-3 py-1 rounded transition-colors'>
+          <button
+            className='bg-purple-500 text-white px-3 py-1 rounded transition-colors'
+            onClick={() => navigate('/donate')}
+          >
             সাহায্য করুন
           </button>
         </div>

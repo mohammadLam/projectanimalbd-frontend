@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.0",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
     "leaflet": "^1.7.1",

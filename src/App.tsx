@@ -23,6 +23,7 @@ import Profile from './page/Profile'
 import Contact from './page/Contact'
 import About from './page/About'
 import Request from './page/Request'
+import Donation from './page/Donation'
 
 const App: React.FC = () => {
   const { dispatch } = useContext(AuthContext)
@@ -74,6 +75,7 @@ const App: React.FC = () => {
         <Route path='/' element={<Home />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
+        <Route path='/donate' element={<Donation />} />
         <Route element={<UnauthenticatedRoute />}>
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
