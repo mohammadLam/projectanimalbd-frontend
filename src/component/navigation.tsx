@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
         <div className='nav__links_container'>
           <Link to='/'>হোম</Link>
           {auth.authenticated && <Link to='/profile'>প্রোফাইল</Link>}
-          {/* <Link to='/about'>আমাদের সম্পর্কে</Link> */}
+          <Link to='/about'>উদ্দেশ্য</Link>
           {auth.authenticated && <Link to='/teams'>টিম</Link>}
           {auth.authenticated && <Link to='/request'>অনুরোধ</Link>}
           {/* <Link to='/contact'>যোগাযোগ</Link> */}

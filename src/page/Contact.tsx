@@ -1,10 +1,15 @@
 import React from 'react'
+import Container from '../component/Container'
+import Heading from '../component/Heading'
 
-const Contact = () => {
+const Contact:React.FC = () => {
   return (
-    <div>
-      <h1 className='text-3xl text-center'>আমাদের সাথে যোগাযোগ করুন</h1>
-    </div>
+    <Container>
+      <div className='mt-5'>
+        <Heading>আমাদের সাথে যোগাযোগ করুন</Heading>
+        <p></p>
+      </div>
+    </Container>
   )
 }
 
