@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 import Input from '../component/Input'
 import Select from '../component/Select'
 import Button from '../component/Button'
-import { object, string } from 'yup'
+import * as Yup from 'yup'
 
 const Signup: React.FC = () => {
   const formik = useFormik({
@@ -17,9 +17,16 @@ const Signup: React.FC = () => {
       repass: '',
       gender: ''
     },
-    validationSchema: object({
-      name: string().max(20, 'নাম অবশ্যই ২০ অক্ষরের মধ্যে হতে হবে').required('নাম লিখুন'),
-      age: string().required('বয়স লিখুন')
+    validationSchema: Yup.object({
+      name: Yup.string().required('নাম লিখুন').min(3).max(20),
+      age: Yup.number().min(13).required('বয়স লিখুন'),
+      gender: Yup.mixed().oneOf(['male', 'female', 'other']).required('লিঙ্গ নির্বাচন করুন'),
+      address: Yup.string().required('ঠিকান লিখুন'),
+      password: Yup.string().min(8, 'পাসওয়ার্ড অবশ্যই ৮ সংখ্যার বেশী হতে হবে').required('পাসওয়ার্ড লিখুন'),
+      repass: Yup.ref('password'),
+      phone: Yup.string()
+        .required('ফোন নং লিখুন')
+        .matches(/^(?:\+?88|0088)?01[15-9]\d{8}$/, 'ফোন নং সঠিক নয়')
     }),
     onSubmit: async values => {
       const createAccount = await axios.post('/member/signup', values)
@@ -49,6 +56,8 @@ const Signup: React.FC = () => {
           name='phone'
           value={formik.values.phone}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.phone ? formik.errors.phone : undefined}
         />
         <Input
           type='number'
@@ -56,12 +65,16 @@ const Signup: React.FC = () => {
           name='age'
           value={formik.values.age}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.age ? formik.errors.age : undefined}
         />
         <Select
           placeholder='লিঙ্গ'
           value={formik.values.gender}
           name='gender'
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.gender ? formik.errors.gender : undefined}
         >
           {[
             {
@@ -82,14 +95,18 @@ const Signup: React.FC = () => {
             }
           ]}
         </Select>
-        <Input
-          placeholder='ঠিকানা'
-          className='col-span-full'
-          name='address'
-          hint='এলাকার নাম, উপজেলা, জেলা'
-          value={formik.values.address}
-          onChange={formik.handleChange}
-        />
+        <div className='col-span-full'>
+          <Input
+            placeholder='ঠিকানা'
+            name='address'
+            hint='এলাকার নাম, উপজেলা, জেলা'
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.address ? formik.errors.address : undefined}
+          />
+        </div>
+        
 
         <Input
           type='password'
@@ -97,6 +114,8 @@ const Signup: React.FC = () => {
           name='password'
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password ? formik.errors.password : undefined}
         />
         <Input
           type='password'
@@ -104,6 +123,8 @@ const Signup: React.FC = () => {
           name='repass'
           value={formik.values.repass}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.repass ? formik.errors.repass : undefined}
         />
       </div>
       <Button type='submit'>অ্যাকাউন্ট তৈরি করুন</Button>

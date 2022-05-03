@@ -23,7 +23,7 @@
   @apply flex flex-col mb-3;
 }
 
-.form-group.error input {
+.form-group.error input, .form-group.error select {
   @apply bg-red-100 border border-red-300 text-red-500 focus:border-red-500;
 }
 

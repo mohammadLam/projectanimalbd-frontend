@@ -9,13 +9,16 @@ interface Props {
   value?: string
   name?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
+  onBlur?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  error?: string
+  disabled?: boolean
 }
 
 const Select: React.FC<Props> = props => {
-  const { placeholder, children, value } = props
+  const { placeholder, children, value,error } = props
 
   return (
-    <div className='form-group'>
+    <div className={`form-group${error ? ' error': ''}`}>
       <label>{placeholder}</label>
       <select {...props} value={value}>
         {children.map((option, index) => (
@@ -24,6 +27,7 @@ const Select: React.FC<Props> = props => {
           </option>
         ))}
       </select>
+      {error && <span className='text-red-500 text-sm mt-1'>{error}</span>}
     </div>
   )
 }

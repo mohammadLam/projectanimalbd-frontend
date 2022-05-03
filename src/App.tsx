@@ -28,8 +28,8 @@ import Donation from './page/Donation'
 const App: React.FC = () => {
   const { dispatch } = useContext(AuthContext)
 
-  axios.defaults.baseURL = 'https://projectanimalbd.herokuapp.com/api/'
-  // axios.defaults.baseURL = 'http://localhost:3001/api'
+  // axios.defaults.baseURL = 'https://projectanimalbd.herokuapp.com/api/'
+  axios.defaults.baseURL = 'http://localhost:3001/api'
   // axios.defaults.baseURL = 'http://192.168.2.114:3001/api'
 
   useEffect(() => {
