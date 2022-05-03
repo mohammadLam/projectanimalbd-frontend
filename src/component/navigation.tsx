@@ -6,6 +6,7 @@ import { AuthContext } from '../context/auth'
 import axios from 'axios'
 import menu from '../img/menu.svg'
 import close from '../img/close.svg'
+import Container from './Container'
 
 const Navigation: React.FC = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -25,7 +26,7 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className='h-[60px] bg-white border-b border-gray-300 flex items-center px-5 lg:px-0'>
-      <div className='container mx-auto flex justify-between items-center'>
+      <Container className='flex justify-between items-center'>
         <div className='grid grid-cols-3'>
           <img src={logo} alt='logo' />
           {/* <h1 className='logo__text'>Help Animal BD</h1> */}
@@ -33,14 +34,14 @@ const Navigation: React.FC = () => {
         <div className='nav__links_container'>
           <Link to='/'>হোম</Link>
           {auth.authenticated && <Link to='/profile'>প্রোফাইল</Link>}
-          <Link to='/about'>আমাদের সম্পর্কে</Link>
+          {/* <Link to='/about'>আমাদের সম্পর্কে</Link> */}
           {auth.authenticated && <Link to='/teams'>টিম</Link>}
           {auth.authenticated && <Link to='/request'>অনুরোধ</Link>}
-          <Link to='/contact'>যোগাযোগ</Link>
+          {/* <Link to='/contact'>যোগাযোগ</Link> */}
           {!auth.authenticated && <Link to='/login'>লগ-ইন</Link>}
           {auth.authenticated && (
             <button
-              className='px-3 py-2 hover:bg-red-200 cursor-pointer text-red-500'
+              className='px-3 py-1 hover:bg-red-50 cursor-pointer text-red-500'
               onClick={logout}
             >
               লগ-আউট
@@ -62,7 +63,7 @@ const Navigation: React.FC = () => {
         </button>
 
         {menuIsOpen && <MobileNavigation />}
-      </div>
+      </Container>
     </nav>
   )
 }

@@ -13,21 +13,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <!-- <link
-      href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    /> -->
 
     <link rel="stylesheet" href="./output.css" />
     <title>Animal Help BD</title>
@@ -36,5 +24,20 @@
     <div id="root"></div>
     <div id="modal"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      ;(function (window, document) {
+        var loader = function () {
+          var script = document.createElement('script'),
+            tag = document.getElementsByTagName('script')[0]
+          script.src =
+            'https://sandbox.sslcommerz.com/embed.min.js?' + Math.random().toString(36).substring(7)
+          tag.parentNode.insertBefore(script, tag)
+        }
+
+        window.addEventListener
+          ? window.addEventListener('load', loader, false)
+          : window.attachEvent('onload', loader)
+      })(window, document)
+    </script>
   </body>
 </html>

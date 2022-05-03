@@ -9,6 +9,7 @@ import Heading from '../../component/Heading'
 
 import { enToBn } from '../../function/en-bn'
 import { Tab } from '@headlessui/react'
+import Container from '../../component/Container'
 
 export interface IMember {
   _id: string
@@ -113,7 +114,7 @@ const ViewAdmin: React.FC = () => {
   }, [])
 
   return (
-    <div className='container mx-auto px-5 md:px-0'>
+    <Container>
       <div className='mt-5'>
         {teamInfo && (
           <div className='py-5 mb-10 bg-white border-b-2 border-gray-200 flex mx-auto lg:flex justify-center items-center gap-x-20'>
@@ -168,13 +169,13 @@ const ViewAdmin: React.FC = () => {
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
                   {requests &&
                     requests.map(request => <RescueRequest request={request} key={request._id} />)}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
                   {requests &&
                     requests.map(
                       request =>
@@ -185,7 +186,7 @@ const ViewAdmin: React.FC = () => {
                 </div>
               </Tab.Panel>
               <Tab.Panel>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-start gap-3'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
                   {requests &&
                     requests.map(
                       request =>
@@ -210,7 +211,7 @@ const ViewAdmin: React.FC = () => {
           টিম সংস্কার করুনঃ
         </h1> */}
       </div>
-    </div>
+    </Container>
   )
 }
 

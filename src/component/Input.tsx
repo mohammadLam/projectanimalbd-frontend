@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface Props {
-  value?: string
+  value?: string | number
   type?: 'text' | 'number' | 'password'
   name?: string
   placeholder?: string
@@ -10,6 +10,7 @@ interface Props {
   className?: string
   hint?: string
   error?: string
+  disabled?: boolean
 }
 
 const Input: React.FC<Props> = props => {
@@ -18,7 +19,7 @@ const Input: React.FC<Props> = props => {
     <div className={`form-group ${error && 'error'}`}>
       <label>{placeholder}</label>
       <input {...props} type={type || 'text'} placeholder={hint || ''} />
-      {error && <span className='text-red-500 text-sm'>{error}</span>}
+      {error && <span className='text-red-500 text-sm mt-1'>{error}</span>}
     </div>
   )
 }

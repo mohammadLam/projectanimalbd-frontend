@@ -32,7 +32,7 @@ const Signup: React.FC = () => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-40'
+      className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mt-10 mx-auto lg:mt-40'
     >
       <h1 className='text-3xl font-semibold text-center mb-5'>সাইন আপ</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>

@@ -28,23 +28,9 @@ import Donation from './page/Donation'
 const App: React.FC = () => {
   const { dispatch } = useContext(AuthContext)
 
-  // axios.defaults.baseURL = 'https://projectanimalbd.herokuapp.com/api/'
-  axios.defaults.baseURL = 'http://localhost:3001/api'
+  axios.defaults.baseURL = 'https://projectanimalbd.herokuapp.com/api/'
+  // axios.defaults.baseURL = 'http://localhost:3001/api'
   // axios.defaults.baseURL = 'http://192.168.2.114:3001/api'
-  axios.interceptors.response.use(
-    response => response,
-    async err => {
-      if (err.response.status === 401) {
-        await axios.get('/token/refresh-token', {
-          withCredentials: true
-        })
-
-        return axios(err.config)
-      }
-
-      return Promise.reject(err)
-    }
-  )
 
   useEffect(() => {
     const memberAuthenticated = async () => {
