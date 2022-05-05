@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import logo from '../img/logo.svg'
 import { AuthContext } from '../context/auth'
@@ -11,6 +11,9 @@ import Container from './Container'
 const Navigation: React.FC = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+  
+
 
   const { auth, dispatch } = useContext(AuthContext)
   const logout = async () => {
@@ -28,8 +31,7 @@ const Navigation: React.FC = () => {
     <nav className='h-[60px] bg-white border-b border-gray-300 flex items-center px-5 lg:px-0'>
       <Container className='flex justify-between items-center'>
         <div className='grid grid-cols-3'>
-          <img src={logo} alt='logo' />
-          {/* <h1 className='logo__text'>Help Animal BD</h1> */}
+          {location.pathname === '/' ? <img src={logo} alt='logo' />: <Link to="/"><img src={logo} alt='logo' /></Link>}
         </div>
         <div className='nav__links_container'>
           <Link to='/'>হোম</Link>

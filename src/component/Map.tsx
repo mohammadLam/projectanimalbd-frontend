@@ -87,7 +87,7 @@ const Map: React.FC = () => {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Circle center={[latitude, longitude]} radius={80000} />
+          <Circle center={[latitude, longitude]} radius={5000} />
           <Marker position={[latitude, longitude]}>
             <Popup>
               <h1 className='text-2xl font-medium'>আপনার লোকেশান</h1>

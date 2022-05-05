@@ -4,6 +4,9 @@ import App from './App'
 import { LocationProvider } from './context/location'
 import { AuthProvider } from './context/auth'
 import { TeamProvider } from './context/team'
+import { RequestProvider } from './context/Request'
+import { MemberProvider } from './context/member'
+
 import React from 'react'
 
 ReactDOM.render(
@@ -11,7 +14,11 @@ ReactDOM.render(
     <LocationProvider>
       <AuthProvider>
         <TeamProvider>
-          <App />
+          <RequestProvider>
+            <MemberProvider>
+              <App />
+            </MemberProvider>
+          </RequestProvider>
         </TeamProvider>
       </AuthProvider>
     </LocationProvider>

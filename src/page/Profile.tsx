@@ -6,6 +6,8 @@ import toast from 'react-hot-toast'
 import Input from '../component/Input'
 import Select from '../component/Select'
 import Button from '../component/Button'
+import Heading from '../component/Heading'
+import Container from '../component/Container'
 
 const Profile: React.FC = () => {
   const profile = useFormik({
@@ -60,12 +62,12 @@ const Profile: React.FC = () => {
     profileInfo()
   }, [])
   return (
-    <div className='container px-3 lg:px-0 mx-auto'>
+    <Container>
       <form
         onSubmit={profile.handleSubmit}
-        className='bg-white border px-3 md:px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-5 md:mt-20'
+        className='bg-white border px-3 md:px-8 py-5 w-full md:w-[700px] rounded-xl shadow mx-auto mt-5 mb-5 md:mt-20'
       >
-        <h1 className='text-3xl font-normal mb-5'>প্রোফাইলঃ</h1>
+        <Heading>প্রোফাইলঃ</Heading>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <Input
             placeholder='নাম'
@@ -127,9 +129,9 @@ const Profile: React.FC = () => {
 
       <form
         onSubmit={password.handleSubmit}
-        className='bg-white border px-3 md:px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mx-auto mt-10'
+        className='bg-white border px-3 md:px-8 py-5 w-full md:w-[700px] rounded-xl shadow mx-auto mb-5'
       >
-        <h1 className='text-3xl font-semibold mb-5'>পাসওয়ার্ড পরিবর্তন করুনঃ</h1>
+        <Heading>পাসওয়ার্ড পরিবর্তন করুনঃ</Heading>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
           <div className='col-span-full'>
             <Input
@@ -157,7 +159,7 @@ const Profile: React.FC = () => {
         </div>
         <Button type='submit'>পরিবর্তন করুন</Button>
       </form>
-    </div>
+    </Container>
   )
 }
 

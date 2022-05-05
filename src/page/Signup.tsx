@@ -1,12 +1,16 @@
 import axios from 'axios'
-import React from 'react'
+import React, {useContext} from 'react'
 import { useFormik } from 'formik'
 import Input from '../component/Input'
 import Select from '../component/Select'
 import Button from '../component/Button'
 import * as Yup from 'yup'
 
+import { AuthContext } from '../context/auth'
+import toast from 'react-hot-toast'
+
 const Signup: React.FC = () => {
+  const {dispatch} = useContext(AuthContext)
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -29,9 +33,15 @@ const Signup: React.FC = () => {
         .matches(/^(?:\+?88|0088)?01[15-9]\d{8}$/, 'ফোন নং সঠিক নয়')
     }),
     onSubmit: async values => {
-      const createAccount = await axios.post('/member/signup', values)
+      const createAccount = await axios.post('/member/signup', values, {
+        withCredentials: true
+      })
       if (createAccount.status === 200) {
-        alert('Account created successfully')
+        toast.success('অ্যাকাউন্ট তৈরি হয়েছে')
+        dispatch({
+          type: 'authenticated',
+          payload: createAccount.data
+        })
       }
     }
   })

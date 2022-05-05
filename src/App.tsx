@@ -24,6 +24,7 @@ import Contact from './page/Contact'
 import About from './page/About'
 import Request from './page/Request'
 import Donation from './page/Donation'
+import DonateSuccess from './page/DonateSuccess'
 
 const App: React.FC = () => {
   const { dispatch } = useContext(AuthContext)
@@ -62,6 +63,7 @@ const App: React.FC = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/donate' element={<Donation />} />
+        <Route path='/donate/success/:incomeId' element={<DonateSuccess />} />
         <Route element={<UnauthenticatedRoute />}>
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
@@ -83,7 +85,7 @@ const App: React.FC = () => {
         toastOptions={{
           // Define default options
           className: '',
-          duration: 5000,
+          duration: 2000,
           style: {
             background: '#363636',
             color: '#fff'

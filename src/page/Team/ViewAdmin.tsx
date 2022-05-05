@@ -10,31 +10,9 @@ import Heading from '../../component/Heading'
 import { enToBn } from '../../function/en-bn'
 import { Tab } from '@headlessui/react'
 import Container from '../../component/Container'
+import { RequestContext } from '../../context/Request'
+import { MemberContext } from '../../context/member'
 
-export interface IMember {
-  _id: string
-  name: string
-  address: string
-  phone: string
-}
-
-export interface IRequest {
-  _id: string
-  member: {
-    name: string
-    phone: string
-  }
-  team: {
-    _id: string
-    name: string
-  }
-  location: number[]
-  address: string
-  photos: string[]
-  description: string
-  createdAt: string
-  status: 'pending' | 'done' | 'reject'
-}
 
 interface ITeamInfo {
   contact: Contact
@@ -62,10 +40,10 @@ interface Contact {
 }
 
 const ViewAdmin: React.FC = () => {
-  const [memberList, setTeamList] = useState<IMember[]>()
-  const [requests, setRequests] = useState<IRequest[]>()
   const [teamInfo, setTeamInfo] = useState<ITeamInfo>()
   const { auth } = useContext(AuthContext)
+  const { requests, requestsDispatch } = useContext(RequestContext)
+  const {members, membersDispatch} = useContext(MemberContext)
 
   useEffect(() => {
     const canvas = document.getElementById('canvas')
@@ -75,7 +53,10 @@ const ViewAdmin: React.FC = () => {
         withCredentials: true
       })
       if (response.status === 200) {
-        setTeamList(response.data)
+        membersDispatch({
+          type: 'store',
+          payload: response.data
+        })
       }
     }
 
@@ -85,7 +66,10 @@ const ViewAdmin: React.FC = () => {
       })
 
       if (status === 200) {
-        setRequests(data)
+        requestsDispatch({
+          type: 'store',
+          payload: data
+        })
       }
     }
 
@@ -117,7 +101,7 @@ const ViewAdmin: React.FC = () => {
     <Container>
       <div className='mt-5'>
         {teamInfo && (
-          <div className='py-5 mb-10 bg-white border-b-2 border-gray-200 flex mx-auto lg:flex justify-center items-center gap-x-20'>
+          <div className='p-5 mb-10 bg-white border-b-2 border-gray-200 mx-auto flex flex-col lg:flex-row justify-center items-center gap-x-20'>
             <div>
               <Heading>দলের তথ্যঃ</Heading>
               <p>দলের নামঃ {teamInfo.name}</p>
@@ -170,8 +154,7 @@ const ViewAdmin: React.FC = () => {
             <Tab.Panels>
               <Tab.Panel>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
-                  {requests &&
-                    requests.map(request => <RescueRequest request={request} key={request._id} />)}
+                  {requests && requests.length > 0 ? requests.map(request => <RescueRequest request={request} key={request._id} />): <h1>No Request Found</h1>}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
@@ -203,7 +186,7 @@ const ViewAdmin: React.FC = () => {
         <div className='mb-10'>
           <Heading align='center'>সদস্যের তালিকাঃ</Heading>
           <div className='flex flex-wrap gap-3 mb-10 justify-center'>
-            {memberList && memberList.map(member => <Member member={member} key={member._id} />)}
+            {members && members.map(member => <Member member={member} key={member._id} />)}
           </div>
         </div>
 

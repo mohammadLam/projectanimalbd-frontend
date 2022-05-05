@@ -1,15 +1,23 @@
 import axios from 'axios'
-import React from 'react'
+import React, {useContext} from 'react'
 import toast from 'react-hot-toast'
-import { IRequest } from './ViewAdmin'
+import { IRequest,RequestContext } from '../../context/Request'
 
 const RescueRequest: React.FC<{ request: IRequest }> = ({ request }) => {
+  const {requestsDispatch} = useContext(RequestContext)
+
   const rejectRequest = async () => {
     const { status } = await axios.delete('request/' + request._id, {
       withCredentials: true
     })
 
-    if (status === 200) toast.success('অনুরোধ প্রত্যাখ্যান করা হয়েছে')
+    if (status === 200) {
+      toast.success('অনুরোধ প্রত্যাখ্যান করা হয়েছে')
+      requestsDispatch({
+        type: 'reject',
+        id: request._id
+      })
+    }
   }
 
   const { member, address, description, photos } = request

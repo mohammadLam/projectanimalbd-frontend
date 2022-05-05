@@ -15,8 +15,10 @@ const Donation: React.FC = () => {
   const donate = useFormik({
     initialValues: {
       name: '',
+      phone: '',
       amount: 100,
-      comment: ''
+      description: '',
+      memberId: 'memberId' in auth ? auth.memberId : ''
     },
     validationSchema: object({
       name: string().max(20, 'নাম অবশ্যই ২০ অক্ষরের মধ্যে হতে হবে'),
@@ -25,9 +27,15 @@ const Donation: React.FC = () => {
         .required('টাকার পরিমাণ উল্লেখ করুন')
     }),
     onSubmit: async values => {
-      await axios.post('/donate', values, {
-        withCredentials: true
-      })
+      try {
+        const { data, status } = await axios.post('/donate', values)
+        
+        if (status === 200) {
+          window.location = data.redirectGatewayURL
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   })
 
@@ -72,17 +80,28 @@ const Donation: React.FC = () => {
             />
           </div>
           {'memberId' in auth ? null : (
-            <Input
-              placeholder='আপনার নাম'
-              value={donate.values.name}
-              name='name'
-              onChange={donate.handleChange}
-              onBlur={donate.handleBlur}
-              error={donate.touched.name ? donate.errors.name : undefined}
-            />
+            <>
+              <Input
+                placeholder='আপনার নাম (ইংরেজীতে)'
+                value={donate.values.name}
+                name='name'
+                onChange={donate.handleChange}
+                onBlur={donate.handleBlur}
+                error={donate.touched.name ? donate.errors.name : undefined}
+              />
+
+              <Input
+                placeholder='আপনার মোবাইল নং'
+                value={donate.values.phone}
+                name='phone'
+                onChange={donate.handleChange}
+                onBlur={donate.handleBlur}
+                error={donate.touched.phone ? donate.errors.phone : undefined}
+                />
+            </>
           )}
-          <Textarea placeholder='কিছু লিখতে চান?' name='comment' onChange={donate.handleChange}>
-            {donate.values.comment}
+          <Textarea placeholder='কিছু লিখতে চান?' name='description' onChange={donate.handleChange}>
+            {donate.values.description}
           </Textarea>
 
           <Button type='submit'>পাঠান</Button>
