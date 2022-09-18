@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       const response = await axios.post<Team[]>(
-        '/team/under/80',
+        '/team/under/40',
         {
           location: location
         },
@@ -65,7 +65,7 @@ const Home: React.FC = () => {
 
       {/* সাইডবার show/hide এর বাটন */}
       <button
-        className='absolute bottom-5 left-5 w-12 h-12 rounded-full z-20 bg-white shadow-xl flex justify-center items-center'
+        className='absolute bottom-5 left-5 w-12 h-12 rounded-full z-20 bg-white border border-gray-500 flex justify-center items-center'
         onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
       >
         <svg

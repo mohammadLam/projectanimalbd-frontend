@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactModal from 'react-modal'
-import Button from './Button'
 
 interface Props {
   children: React.ReactNode
@@ -31,19 +30,22 @@ const Modal: React.FC<Props> = ({
       className='modal'
       onRequestClose={closeModalFunction}
       shouldCloseOnOverlayClick={false}
-      shouldCloseOnEsc>
+      shouldCloseOnEsc
+    >
       <div className='header'>
-        <h1 className='text-3xl font-medium'>{headerText}</h1>
+        <h1 className='text-2xl font-medium'>{headerText}</h1>
         <button
           type='button'
-          className='flex items-center justify-center bg-red-200 rounded-full w-8 h-8'
-          onClick={closeModalFunction}>
+          className='flex items-center justify-center bg-red-200 rounded-full w-6 h-6'
+          onClick={closeModalFunction}
+        >
           <svg
             className='fill-red-500'
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
-            width='18px'
-            height='18px'>
+            width='14px'
+            height='14px'
+          >
             <path d='M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z' />
           </svg>
         </button>

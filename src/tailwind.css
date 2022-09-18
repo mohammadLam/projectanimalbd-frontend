@@ -23,7 +23,8 @@
   @apply flex flex-col mb-3;
 }
 
-.form-group.error input, .form-group.error select {
+.form-group.error input,
+.form-group.error select {
   @apply bg-red-100 border border-red-300 text-red-500 focus:border-red-500;
 }
 
@@ -46,7 +47,7 @@
   border-gray-200 
   
   focus:border-orange-500
-  focus:border;
+  focus:border-2;
 }
 
 .form-group input:disabled,
@@ -73,7 +74,7 @@
 }
 
 .form-group .browse_button {
-  @apply px-4 py-2 bg-gray-200 text-gray-700;
+  @apply px-4 py-1 bg-gray-200 text-gray-700 whitespace-nowrap;
 }
 
 .primary-btn {
@@ -87,14 +88,18 @@
   font-normal rounded;
 }
 
+.primary-btn:disabled {
+  @apply bg-orange-300 cursor-not-allowed;
+}
+
 .modal {
   @apply absolute 
   inset-x-[20px] top-32 
   border bg-white 
   overflow-auto 
   rounded-lg outline-none 
-  px-10 py-5 
-  min-w-[400px] max-w-[800px] 
+  px-6 py-3
+  max-w-[800px] 
   h-max 
   m-auto shadow;
 }

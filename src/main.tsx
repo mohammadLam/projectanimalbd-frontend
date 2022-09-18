@@ -11,8 +11,8 @@ import React from 'react'
 
 ReactDOM.render(
   <React.StrictMode>
-    <LocationProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <LocationProvider>
         <TeamProvider>
           <RequestProvider>
             <MemberProvider>
@@ -20,8 +20,8 @@ ReactDOM.render(
             </MemberProvider>
           </RequestProvider>
         </TeamProvider>
-      </AuthProvider>
-    </LocationProvider>
+      </LocationProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

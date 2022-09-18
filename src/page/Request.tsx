@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import Container from '../component/Container'
 import Heading from '../component/Heading'
 
 export interface IRequest {
@@ -36,39 +37,41 @@ const Request: React.FC = () => {
   }, [])
 
   return (
-    <div className='container mx-auto px-3 lg:px-0 mt-5'>
+    <Container className='mt-5'>
       <Heading>আপনার রিকোয়েষ্ট হিস্টোরিঃ</Heading>
 
-      {yourRequests && yourRequests.length > 0 ? (
-        <div>
-          {yourRequests.map(request => (
-            <div
-              key={request._id}
-              className='w-full flex flex-col lg:flex-row bg-white mb-5 border rounded-lg shadow overflow-hidden'
-            >
-              <div>
+      <div className='grid grid-cols-2 gap-3'>
+        {yourRequests && yourRequests.length > 0 ? (
+          <>
+            {yourRequests.map(request => (
+              <div
+                key={request._id}
+                className='w-full flex flex-col lg:flex-row bg-white border rounded-lg shadow overflow-hidden'
+              >
+                {/* <div>
                 <img
                   className='w-full lg:w-60 h-full object-cover'
                   src={`${photoUrl}/${request.photos[0]}`}
                   alt='request photo'
                 />
-              </div>
-              <div className='px-5 py-2 flex flex-col justify-between'>
-                <h1 className='text-2xl font-medium'>{request.team.name}</h1>
-                <p>{request.description}</p>
-                <p>{request.address}</p>
-                <p className='text-lg text-gray-800 font-medium'>
+              </div> */}
+                <div className='px-5 py-2 flex flex-col justify-between'>
+                  <h1 className='text-2xl font-medium'>{request.team.name}</h1>
+                  <p>{request.description}</p>
+                  <p>{request.address}</p>
+                  {/* <p className='text-lg text-gray-800 font-medium'>
                   তারিখঃ&nbsp;
                   {new Date(request.createdAt).toLocaleDateString('bn-BD')}
-                </p>
+                </p> */}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <h1>আপনি কোন রিকোয়েস্টই করেননি</h1>
-      )}
-    </div>
+            ))}
+          </>
+        ) : (
+          <h1>আপনি কোন রিকোয়েস্টই করেননি</h1>
+        )}
+      </div>
+    </Container>
   )
 }
 

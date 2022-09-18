@@ -22,7 +22,10 @@ export interface Team {
     phone: string
   }
   name: string
-  location: [number, number]
+  location: {
+    type: 'Point',
+    coordinates: [number, number]
+  }
   address: string
   members: Member[]
   contact: {

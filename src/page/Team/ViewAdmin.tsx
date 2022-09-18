@@ -13,7 +13,6 @@ import Container from '../../component/Container'
 import { RequestContext } from '../../context/Request'
 import { MemberContext } from '../../context/member'
 
-
 interface ITeamInfo {
   contact: Contact
   _id: string
@@ -43,7 +42,7 @@ const ViewAdmin: React.FC = () => {
   const [teamInfo, setTeamInfo] = useState<ITeamInfo>()
   const { auth } = useContext(AuthContext)
   const { requests, requestsDispatch } = useContext(RequestContext)
-  const {members, membersDispatch} = useContext(MemberContext)
+  const { members, membersDispatch } = useContext(MemberContext)
 
   useEffect(() => {
     const canvas = document.getElementById('canvas')
@@ -108,6 +107,7 @@ const ViewAdmin: React.FC = () => {
               <p>মোট সদস্যঃ {enToBn(teamInfo.members.length)} জন</p>
               <p>দলের অবস্থানঃ {teamInfo.address}</p>
               <p>যোগাযোগঃ {teamInfo.contact.phone}</p>
+<p>যোগাযোগঃ {teamInfo._id}</p>
             </div>
             <div className='flex flex-col items-center'>
               <canvas id='canvas'></canvas>
@@ -121,7 +121,7 @@ const ViewAdmin: React.FC = () => {
         <div className='border-b-2 border-gray-200 pb-10 mb-10'>
           <Heading align='center'>সাহায্যের জন্য আবেদেন করেছেনঃ</Heading>
 
-          <Tab.Group defaultIndex={2}>
+          <Tab.Group defaultIndex={1}>
             <Tab.List className='mx-auto w-max bg-white rounded overflow-hidden border mb-3'>
               <Tab
                 className={({ selected }) =>
@@ -148,13 +148,26 @@ const ViewAdmin: React.FC = () => {
                   }`
                 }
               >
+                প্রসেসিং
+              </Tab>
+              <Tab
+                className={({ selected }) =>
+                  `px-5 py-2 ${
+                    selected ? 'bg-gray-200 text-gray-600 font-normal' : 'text-yellow-800'
+                  }`
+                }
+              >
                 রিজেক্ট
               </Tab>
             </Tab.List>
-            <Tab.Panels>
+            <Tab.Panels className='min-h-[500px]'>
               <Tab.Panel>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
-                  {requests && requests.length > 0 ? requests.map(request => <RescueRequest request={request} key={request._id} />): <h1>No Request Found</h1>}
+                  {requests && requests.length > 0 ? (
+                    requests.map(request => <RescueRequest request={request} key={request._id} />)
+                  ) : (
+                    <h1>No Request Found</h1>
+                  )}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
@@ -170,6 +183,20 @@ const ViewAdmin: React.FC = () => {
               </Tab.Panel>
               <Tab.Panel>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-3'>
+                  {requests ? (
+                    requests.map(
+                      request =>
+                        request.status === 'processing' && (
+                          <RescueRequest request={request} key={request._id} />
+                        )
+                    )
+                  ) : (
+                    <h1>কোন অনুরোধই পেন্ডিং এ নেই</h1>
+                  )}
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-start gap-3'>
                   {requests &&
                     requests.map(
                       request =>

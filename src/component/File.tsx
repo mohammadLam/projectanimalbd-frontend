@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { enToBn } from '../function/en-bn'
 
 interface Props {
   placeholder?: string
@@ -29,10 +30,11 @@ const File: React.FC<Props> = props => {
 
       <div
         className='file flex items-center justify-between gap-x-3'
-        onClick={() => fileElement.current?.click()}>
-        <div className='browse_button'>ফাইল সিলেক্ট করুন</div>
-        <div className='text-gray-400 flex-1'>
-          {totalFile === 0 ? hint : `${totalFile} file selected`}
+        onClick={() => fileElement.current?.click()}
+      >
+        <div className='browse_button'>ফাইল</div>
+        <div className='text-gray-400 flex-1 whitespace-nowrap'>
+          {totalFile === 0 ? hint : `${enToBn(totalFile)}টি ফাইল নির্বাচন করেছেন`}
         </div>
       </div>
     </div>

@@ -11,14 +11,20 @@ interface Props {
   hint?: string
   error?: string
   disabled?: boolean
+  autoComplete?: boolean
 }
 
 const Input: React.FC<Props> = props => {
   const { placeholder, type, hint, error } = props
   return (
-    <div className={`form-group${error ? ' error': ''}`}>
+    <div className={`form-group${error ? ' error' : ''}`}>
       <label>{placeholder}</label>
-      <input {...props} type={type || 'text'} placeholder={hint || ''} />
+      <input
+        {...props}
+        type={type || 'text'}
+        placeholder={hint || ''}
+        autoComplete={props.autoComplete ? 'true' : 'false'}
+      />
       {error && <span className='text-red-500 text-sm mt-1'>{error}</span>}
     </div>
   )

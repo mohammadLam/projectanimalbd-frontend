@@ -2,26 +2,36 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import logo from '../img/logo.svg'
-import { AuthContext } from '../context/auth'
 import axios from 'axios'
 import menu from '../img/menu.svg'
 import close from '../img/close.svg'
 import Container from './Container'
 
+import { AuthContext } from '../context/auth'
+import { RequestContext } from '../context/Request'
+import { MemberContext } from '../context/member'
+
 const Navigation: React.FC = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  
-
 
   const { auth, dispatch } = useContext(AuthContext)
+  const { requestsDispatch } = useContext(RequestContext)
+  const { membersDispatch } = useContext(MemberContext)
+
   const logout = async () => {
     try {
       await axios.delete('/member/logout', {
         withCredentials: true
       })
       dispatch({ type: 'unauthenticated' })
+      requestsDispatch({
+        type: 'clear'
+      })
+      membersDispatch({
+        type: 'clear'
+      })
     } catch (error) {
       console.log(error)
     }
@@ -31,7 +41,13 @@ const Navigation: React.FC = () => {
     <nav className='h-[60px] bg-white border-b border-gray-300 flex items-center px-5 lg:px-0'>
       <Container className='flex justify-between items-center'>
         <div className='grid grid-cols-3'>
-          {location.pathname === '/' ? <img src={logo} alt='logo' />: <Link to="/"><img src={logo} alt='logo' /></Link>}
+          {location.pathname === '/' ? (
+            <img src={logo} alt='logo' />
+          ) : (
+            <Link to='/'>
+              <img src={logo} alt='logo' />
+            </Link>
+          )}
         </div>
         <div className='nav__links_container'>
           <Link to='/'>হোম</Link>

@@ -25,6 +25,10 @@ code {
   height: calc(100vh - 60px);
 }
 
+.leaflet-container.request {
+  height: 300px;
+}
+
 .leaflet-popup-content p {
   margin: 0;
   margin-bottom: 10px;

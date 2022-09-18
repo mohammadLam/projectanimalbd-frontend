@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { useFormik } from 'formik'
 import Input from '../component/Input'
 import Select from '../component/Select'
@@ -10,7 +10,7 @@ import { AuthContext } from '../context/auth'
 import toast from 'react-hot-toast'
 
 const Signup: React.FC = () => {
-  const {dispatch} = useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext)
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -25,8 +25,10 @@ const Signup: React.FC = () => {
       name: Yup.string().required('নাম লিখুন').min(3).max(20),
       age: Yup.number().min(13).required('বয়স লিখুন'),
       gender: Yup.mixed().oneOf(['male', 'female', 'other']).required('লিঙ্গ নির্বাচন করুন'),
-      address: Yup.string().required('ঠিকান লিখুন'),
-      password: Yup.string().min(8, 'পাসওয়ার্ড অবশ্যই ৮ সংখ্যার বেশী হতে হবে').required('পাসওয়ার্ড লিখুন'),
+      address: Yup.string().required('ঠিকানা লিখুন'),
+      password: Yup.string()
+        .min(8, 'পাসওয়ার্ড অবশ্যই ৮ সংখ্যার বেশী হতে হবে')
+        .required('পাসওয়ার্ড লিখুন'),
       repass: Yup.ref('password'),
       phone: Yup.string()
         .required('ফোন নং লিখুন')
@@ -49,7 +51,7 @@ const Signup: React.FC = () => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className='bg-white border px-8 py-5 w-[350px] sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mt-10 mx-auto lg:mt-40'
+      className='bg-white border px-8 py-5 w-full sm:w-[650px] md:w-[700px] rounded-xl shadow-lg mt-10 mx-auto lg:mt-40'
     >
       <h1 className='text-3xl font-semibold text-center mb-5'>সাইন আপ</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-5'>
@@ -116,7 +118,6 @@ const Signup: React.FC = () => {
             error={formik.touched.address ? formik.errors.address : undefined}
           />
         </div>
-        
 
         <Input
           type='password'

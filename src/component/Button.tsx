@@ -9,13 +9,12 @@ interface Props {
       | React.FormEventHandler<HTMLButtonElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void
+  disabled?: boolean
 }
 
 const Button: React.FC<Props> = props => {
   return (
-    <button
-      {...props}
-      className={`primary-btn ${props.widthFull ? 'w-full' : ''}`}>
+    <button {...props} className={`primary-btn ${props.widthFull ? 'w-full' : ''}`}>
       {props.children}
     </button>
   )

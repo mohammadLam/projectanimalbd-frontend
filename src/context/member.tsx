@@ -8,10 +8,15 @@ export interface IMember {
 
 const initialState: IMember[] = []
 
-type ACTIONTYPE = { type: 'store'; payload: IMember[] } |
-{
-  type: 'remove'; id: string
-}
+type ACTIONTYPE =
+  | { type: 'store'; payload: IMember[] }
+  | {
+      type: 'remove'
+      id: string
+    }
+  | {
+      type: 'clear'
+    }
 
 const reducerFunction = (state: IMember[], action: ACTIONTYPE) => {
   switch (action.type) {
@@ -19,6 +24,9 @@ const reducerFunction = (state: IMember[], action: ACTIONTYPE) => {
       return action.payload
     case 'remove': {
       return state.filter(member => member._id !== action.id)
+    }
+    case 'clear': {
+      return []
     }
     default:
       return state
@@ -35,5 +43,7 @@ export const MemberContext = createContext<ContextType>(null!)
 export const MemberProvider: React.FC = ({ children }) => {
   const [members, membersDispatch] = useReducer(reducerFunction, initialState)
 
-  return <MemberContext.Provider value={{ members, membersDispatch }}>{children}</MemberContext.Provider>
+  return (
+    <MemberContext.Provider value={{ members, membersDispatch }}>{children}</MemberContext.Provider>
+  )
 }

@@ -32,13 +32,9 @@ const Login: React.FC = () => {
     }),
     onSubmit: async () => {
       try {
-        const { data, status } = await axios.post(
-          '/member/login',
-          formik.values,
-          {
-            withCredentials: true
-          }
-        )
+        const { data, status } = await axios.post('/member/login', formik.values, {
+          withCredentials: true
+        })
 
         if (status === 200) {
           dispatch({
@@ -65,6 +61,7 @@ const Login: React.FC = () => {
         <Input
           placeholder='মোবাইল'
           name='phone'
+          autoComplete={false}
           value={formik.values.phone}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

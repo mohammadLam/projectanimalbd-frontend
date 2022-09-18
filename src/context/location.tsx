@@ -19,24 +19,24 @@ const reducerFunction = (state: location, action: ACTIONTYPE) => {
 
 interface ContextType {
   location: location
-  dispatch: React.Dispatch<ACTIONTYPE>
+  locationDispatch: React.Dispatch<ACTIONTYPE>
 }
 
 export const LocationContext = createContext<ContextType>(null!)
 
 export const LocationProvider: React.FC = ({ children }) => {
-  const [location, dispatch] = useReducer(reducerFunction, initialState)
+  const [location, locationDispatch] = useReducer(reducerFunction, initialState)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
-      dispatch({
+      locationDispatch({
         type: 'store',
-        payload: [position.coords.latitude, position.coords.longitude]
+        payload: [position.coords.longitude, position.coords.latitude]
       })
     })
   }, [])
 
   return (
-    <LocationContext.Provider value={{ location, dispatch }}>{children}</LocationContext.Provider>
+    <LocationContext.Provider value={{ location, locationDispatch }}>{children}</LocationContext.Provider>
   )
 }

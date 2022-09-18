@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react'
+import { RequestContext } from '../context/Request'
 
 interface Authorized {
   authenticated: boolean
